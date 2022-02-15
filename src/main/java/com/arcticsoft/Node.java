@@ -1,17 +1,37 @@
 package com.arcticsoft;
 
-class Node 
-{
-    int value;
-    Node left;
-    Node parent;
-    Node right;
+class Node {
+    private int value;
+    private Node left;
+    private Node parent;
+    private Node right;
 
-    public Node(int value, Node left, Node parent, Node right) 
-    {
+    public Node(int value, Node parent) {
         this.value = value;
-        this.left = left;
         this.parent = parent;
-        this.right = right;
+    }
+
+    public int value() {
+        return value;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public Node setLeft(Node n) {
+        return left = n;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+
+    public Node setRight(Node n) {
+        return right = n;
     }
 }

@@ -4,77 +4,77 @@ import java.util.List;
 
 import java.util.ArrayList;
 
-public class BST 
-{
-    Node root = null;
+public class BST {
+    private Node root = null;
 
-    public Node insert(int key) 
-    {
-        if (root == null) 
-        {
-            root = new Node(key, null, null, null);
+    public Node insert(int key) {
+        if (root == null) {
+            root = new Node(key, null);
             return root;
         } 
         else return insertRecursive(key, root);
     }
 
-    private Node insertRecursive(int key, Node n) 
-    {
-        if (key < n.value) 
-        {
-            if (n.left == null) 
-            {
-                n.left = new Node(key, null, n, null);
-                return n.left;
+    private Node insertRecursive(int key, Node n) {
+        if (key < n.value()) {
+            if (n.getLeft() == null) {
+                return n.setLeft(new Node(key, n));
             }
-            else return insertRecursive(key, n.left);
+            else return insertRecursive(key, n.getLeft());
         } 
-        else if (key > n.value) 
-        {
-            if (n.right == null) 
-            {
-                n.right = new Node(key, null, n, null);
-                return n.right;
+        else if (key > n.value()) {
+            if (n.getRight() == null) {
+                return n.setRight(new Node(key, n));
             }
-            else return insertRecursive(key, n.right);
+            else return insertRecursive(key, n.getRight());
         } 
         else return n;
     }
 
-    public int findNextInnorder(Node n) 
-    {
+    public int findNextInnorder(Node n) {
+        if (n == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         // Búsqueda hacia abajo
-        if (n.right != null) {
-            while (n.right != null) 
-            {
-                n = n.right;
-                if (n.left != null) 
-                {
-                    while (n.left != null) n = n.left;
-                    return n.value;
+        if (n.getRight() != null) {
+            while (n.getRight() != null) {
+                n = n.getRight();
+                if (n.getLeft() != null) {
+                    while (n.getLeft() != null) {
+                        n = n.getLeft();
+                    }
+                    return n.value();
                 }
             }
-            return n.value;
+            return n.value();
         }
         // Búsqueda hacia arriba
-        while (n.parent != null) {
-            if (n == n.parent.left) return n.parent.value;
-            n = n.parent;
+        while (n.getParent() != null) {
+            if (n == n.getParent().getLeft()) {
+                return n.getParent().value();
+            }
+            n = n.getParent();
         }
         return -1;
     }
 
-    public List<Integer> listInOrder() 
-    {
+    public List<Integer> listInOrder() {
         List<Integer> list = new ArrayList<>();
         if (root != null) listInOrderRec(root, list);
         return list;
     }
 
-    private void listInOrderRec(Node n, List<Integer> list) 
-    {
-        if (n.left != null) listInOrderRec(n.left, list);
-        list.add(n.value);
-        if (n.right != null) listInOrderRec(n.right, list);
+    private void listInOrderRec(Node n, List<Integer> list) {
+        if (n.getLeft() != null) {
+            listInOrderRec(n.getLeft(), list);  
+        } 
+        list.add(n.value());
+        if (n.getRight() != null) {
+            listInOrderRec(n.getRight(), list);
+        }
+    }
+
+    public Node getRoot() {
+        return root;
     }
 }

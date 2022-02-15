@@ -2,6 +2,7 @@ package com.arcticsoft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,41 +11,44 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
-public class BSTTests 
-{
+import io.quarkus.test.junit.QuarkusTest;
+
+@QuarkusTest
+public class BSTTests {
     BST bst;
+    List<Integer> list;
 
     @BeforeEach
     void init() {
         bst = new BST();
+        list = Arrays.asList(20, 15, 7, 283, 534, 1, 45);
     }
 
     @Test
-    public void creationTest() {
+    public void creation() {
         assertNotNull(bst);
+        assertEquals(new ArrayList<Integer>(Collections.emptyList()), bst.listInOrder());
+        Executable exec = () -> bst.findNextInnorder(bst.getRoot());
+        assertThrows(IllegalArgumentException.class, exec);
     }
 
     @Test
-    public void InsertBSTTest()
-    {
-        List<Integer> list = Arrays.asList(5, 9, 11, 12, 13, 14, 20, 25);
+    public void InsertIsOrderedBST() {
         List<Integer> insertList = new ArrayList<>(list);
+        List<Integer> expectedOrderedList = List.of(1, 7, 15, 20, 45, 283, 534);
         Collections.shuffle(insertList);
         insertList.stream().forEach(value -> bst.insert(value));
-        assertEquals(list, bst.listInOrder());
+        assertEquals(expectedOrderedList, bst.listInOrder());
     }
 
     @Test
-    public void insertNoDuplicatesTest()
-    {
-        List<Integer> list = Arrays.asList(20, 15, 7, 283, 534, 1, 45);
+    public void insertHasNoDuplicates() {
         list.stream().forEach(value -> bst.insert(value));
         bst.insert(20);
         bst.insert(534);
-        Node n = bst.insert(1);
-        assertEquals(1, n.value);
-
+        bst.insert(1);
         List<Integer> listCopy = new ArrayList<>(list);
         listCopy.sort((i, j) -> i - j);
         // Collections.sort(listCopy);
@@ -52,8 +56,7 @@ public class BSTTests
     }
 
     @Test   
-    public void findNextInOrderTest()
-    {   
+    public void findNextInOrder() {   
         List<Integer> list = Arrays.asList(5, 9, 11, 12, 13, 14, 20, 25);
         list.stream().forEach(value -> bst.insert(value));
         Node n = bst.insert(6);
