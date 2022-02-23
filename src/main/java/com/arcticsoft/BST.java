@@ -14,6 +14,10 @@ public class BST {
         } 
         else return insertRecursive(key, root);
     }
+    
+    public Node getRoot() {
+        return root;
+    }
 
     private Node insertRecursive(int key, Node n) {
         if (key < n.value()) {
@@ -72,9 +76,5 @@ public class BST {
         if (n.getRight() != null) {
             listInOrderRec(n.getRight(), list);
         }
-    }
-
-    public Node getRoot() {
-        return root;
     }
 }
