@@ -1,14 +1,13 @@
 package com.arcticsoft;
 
 class Node {
-    private int value;
-    private Node left;
+    private final int value;
     private Node parent;
+    private Node left;
     private Node right;
 
-    public Node(int value, Node parent) {
+    public Node(int value) {
         this.value = value;
-        this.parent = parent;
     }
 
     public int value() {
@@ -19,19 +18,21 @@ class Node {
         return parent;
     }
 
-    public Node getLeft() {
+    public Node left() {
         return left;
     }
 
     public Node setLeft(Node n) {
+        n.parent = this;
         return left = n;
     }
 
-    public Node getRight() {
+    public Node right() {
         return right;
     }
 
     public Node setRight(Node n) {
+        n.parent = this;
         return right = n;
     }
 }

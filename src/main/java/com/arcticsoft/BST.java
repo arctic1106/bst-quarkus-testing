@@ -7,30 +7,30 @@ import java.util.ArrayList;
 public class BST {
     private Node root = null;
 
-    public Node insert(int key) {
-        if (root == null) {
-            root = new Node(key, null);
-            return root;
-        } 
-        else return insertRecursive(key, root);
-    }
-    
     public Node getRoot() {
         return root;
     }
 
+    public Node insert(int key) {
+        if (root == null) {
+            root = new Node(key);
+            return root;
+        } 
+        else return insertRecursive(key, root);
+    }
+
     private Node insertRecursive(int key, Node n) {
         if (key < n.value()) {
-            if (n.getLeft() == null) {
-                return n.setLeft(new Node(key, n));
+            if (n.left() == null) {
+                return n.setLeft(new Node(key));
             }
-            else return insertRecursive(key, n.getLeft());
+            else return insertRecursive(key, n.left());
         } 
         else if (key > n.value()) {
-            if (n.getRight() == null) {
-                return n.setRight(new Node(key, n));
+            if (n.right() == null) {
+                return n.setRight(new Node(key));
             }
-            else return insertRecursive(key, n.getRight());
+            else return insertRecursive(key, n.right());
         } 
         else return n;
     }
@@ -40,12 +40,12 @@ public class BST {
             throw new IllegalArgumentException("Node cannot be null");
         }
         // Búsqueda hacia abajo
-        if (n.getRight() != null) {
-            while (n.getRight() != null) {
-                n = n.getRight();
-                if (n.getLeft() != null) {
-                    while (n.getLeft() != null) {
-                        n = n.getLeft();
+        if (n.right() != null) {
+            while (n.right() != null) {
+                n = n.right();
+                if (n.left() != null) {
+                    while (n.left() != null) {
+                        n = n.left();
                     }
                     return n.value();
                 }
@@ -54,7 +54,7 @@ public class BST {
         }
         // Búsqueda hacia arriba
         while (n.getParent() != null) {
-            if (n == n.getParent().getLeft()) {
+            if (n == n.getParent().left()) {
                 return n.getParent().value();
             }
             n = n.getParent();
@@ -69,12 +69,12 @@ public class BST {
     }
 
     private void listInOrderRec(Node n, List<Integer> list) {
-        if (n.getLeft() != null) {
-            listInOrderRec(n.getLeft(), list);  
+        if (n.left() != null) {
+            listInOrderRec(n.left(), list);
         } 
         list.add(n.value());
-        if (n.getRight() != null) {
-            listInOrderRec(n.getRight(), list);
+        if (n.right() != null) {
+            listInOrderRec(n.right(), list);
         }
     }
 }

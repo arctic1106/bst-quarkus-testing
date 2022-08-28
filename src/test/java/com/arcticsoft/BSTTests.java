@@ -13,9 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import io.quarkus.test.junit.QuarkusTest;
-
-@QuarkusTest
 public class BSTTests {
     BST bst;
     List<Integer> list;
@@ -39,26 +36,24 @@ public class BSTTests {
         List<Integer> insertList = new ArrayList<>(list);
         List<Integer> expectedOrderedList = List.of(1, 7, 15, 20, 45, 283, 534);
         Collections.shuffle(insertList);
-        insertList.stream().forEach(value -> bst.insert(value));
+        insertList.forEach(value -> bst.insert(value));
         assertEquals(expectedOrderedList, bst.listInOrder());
     }
 
     @Test
     public void insertHasNoDuplicates() {
-        list.stream().forEach(value -> bst.insert(value));
+        list.forEach(value -> bst.insert(value));
         bst.insert(20);
         bst.insert(534);
         bst.insert(1);
-        List<Integer> listCopy = new ArrayList<>(list);
-        listCopy.sort((i, j) -> i - j);
-        // Collections.sort(listCopy);
-        assertEquals(listCopy, bst.listInOrder());
+        Collections.sort(list);
+        assertEquals(list, bst.listInOrder());
     }
 
     @Test   
     public void findNextInOrder() {   
         List<Integer> list = Arrays.asList(5, 9, 11, 12, 13, 14, 20, 25);
-        list.stream().forEach(value -> bst.insert(value));
+        list.forEach(value -> bst.insert(value));
         Node n = bst.insert(6);
         assertEquals(9, bst.findNextInnorder(n));
     }
